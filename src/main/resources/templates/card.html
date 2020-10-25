@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Boot Thymeleaf example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="alert alert-success">
+    <strong>Card editor</strong> - kenny.net
+</div>
+<div class="container">
+    <h5>Add~Edit</h5>
+    <form action="#" th:action="@{/card/addEdit}" method="post" th:object="${card}">
+        Name:<br/>
+        <input type="text" class="form-control" id="title" th:field="*{name}" placeholder="Title"/>
+        <br/>
+        Company name :<br/>
+        <input type="text" class="form-control" id="tags" th:field="*{companyname}"  placeholder="Tags"/>
+        <br/>
+        Email address:<br/>
+        <input type="email" class="form-control" id="language" th:field="*{ email}" placeholder="Language"/>
+        <br/>
+        Telephone number:<br/>
+        <input type="text" class="form-control" id="country" th:field="*{telephone}" placeholder="Country"/>
+        <input type="hidden" id="id" th:field="*{id}">
+        <br/>
+        <button type="submit" class="btn btn-info">Submit</button>
+    </form>
+</div>
+</body>
+</html>
