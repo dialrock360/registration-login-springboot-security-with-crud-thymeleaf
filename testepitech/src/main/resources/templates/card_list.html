@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Card list page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="alert alert-success">
+    <strong>Spring Boot Thymeleaf Crud</strong> - csdcodes.net
+</div>
+<div class="container">
+    <div style="text-align: right; margin-bottom: 5px;">
+        <a th:href="@{/card/add}" class="btn btn-success" role="button">+ Add card</a>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Company name</th>
+            <th>Email address</th>
+            <th>Telephone number</th>
+            <th></th>
+        </tr>
+  )
+        </thead>
+        <tbody>
+        <tr th:each="card : ${movies}">
+            <td th:text="${card.id}"></td>
+            <td th:text="${card.name}"></td>
+            <td th:text="${card.email}"></td>
+            <td th:text="${card.companyname}"></td>
+            <td th:text="${card.telephone}"></td>
+            <td>
+                <a th:href="@{/card/edit/{id}(id=${card.id})}" class="btn btn-success btn-sm" role="button">Update</a>
+                <a th:href="@{/card/delete/{id}(id=${card.id})}" class="btn btn-danger btn-sm" role="button">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

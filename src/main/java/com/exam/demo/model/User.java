@@ -1,21 +1,33 @@
 package com.exam.demo.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private String firstName;
-    private String lastName;
+    private String name;
+    private String companyName;
     private String email;
     private String password;
+    private String telephone;
 
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true
+    )
+    @Fetch(FetchMode.SELECT)
+    private List<Card> mycards = new ArrayList<>();
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
@@ -28,18 +40,20 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String name, String lastName, String email, String password, String telephone) {
+        this.name = name;
+        this.companyName = lastName;
         this.email = email;
         this.password = password;
+        this.telephone = telephone;
     }
 
-    public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String name, String companyName, String email, String password,String telephone, Collection<Role> roles) {
+        this.name = name;
+        this.companyName = companyName;
         this.email = email;
         this.password = password;
+        this.telephone = telephone;
         this.roles = roles;
     }
 
@@ -51,20 +65,20 @@ public class User {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public String getEmail() {
@@ -83,6 +97,14 @@ public class User {
         this.password = password;
     }
 
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
     public Collection<Role> getRoles() {
         return roles;
     }
@@ -95,9 +117,10 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", name='" + name + '\'' +
+                ", companyName='" + companyName + '\'' +
                 ", email='" + email + '\'' +
+                ", telephone='" + telephone + '\'' +
                 ", password='" + "*********" + '\'' +
                 ", roles=" + roles +
                 '}';

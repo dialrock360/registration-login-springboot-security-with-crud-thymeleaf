@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
-
     @Autowired
     private UserRepository userRepository;
 
@@ -31,9 +31,10 @@ public class UserServiceImpl implements UserService {
 
     public User save(UserRegistrationDto registration){
         User user = new User();
-        user.setFirstName(registration.getFirstName());
-        user.setLastName(registration.getLastName());
+        user.setName(registration.getName());
+        user.setCompanyName(registration.getCompanyName());
         user.setEmail(registration.getEmail());
+        user.setTelephone(registration.getTelephone());
         user.setPassword(passwordEncoder.encode(registration.getPassword()));
         user.setRoles(Arrays.asList(new Role("ROLE_USER")));
         return userRepository.save(user);
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
         if (user == null){
-            throw new UsernameNotFoundException("Invalid username or password.");
+            throw new UsernameNotFoundException("Invalid email or password.");
         }
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
                 user.getPassword(),

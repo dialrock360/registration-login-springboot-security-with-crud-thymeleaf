@@ -74,7 +74,7 @@
 
 	<div class="row content">
 		<div class="col-sm-3 sidenav">
-			<h4>DIALROCK Blog</h4>
+			<h4>Welcome <span sec:authentication="principal.username">User</span></h4>
 			<br>
 
 			<div style="text-align: right; margin-bottom: 5px;">
@@ -102,13 +102,13 @@
 
 				</thead>
 				<tbody id="myTable">
-				<tr th:each="card : ${movies}">
+				<tr th:each="card : ${cards}">
 					<td th:text="${card.name}"></td>
 					<td th:text="${card.companyname}"></td>
 					<td th:text="${card.telephone}"></td>
 					<td>
-						<a th:href="@{/card/edit/{id}(id=${card.id})}" class="btn btn-success btn-sm" role="button">Update</a>
-						<a th:href="@{/card/delete/{id}(id=${card.id})}" class="btn btn-danger btn-sm" role="button">Delete</a>
+						<a th:href="@{/card/edit/{id}(id=${card.id})}" class="btn btn-success btn-sm" role="button"><i class="glyphicon glyphicon-edit"></i></a>
+						<a th:href="@{/card/delete/{id}(id=${card.id})}" class="btn btn-danger btn-sm" role="button"><i class="glyphicon glyphicon-trash"></i></a>
 					</td>
 				</tr>
 				</tbody>
@@ -119,16 +119,16 @@
 			<h4><small>Add~Edit CARD</small></h4>
 			<form action="#" th:action="@{/card/addEdit}" method="post" th:object="${card}">
 				Name:<br/>
-				<input type="text" class="form-control" id="title" th:field="*{name}" placeholder="Title"/>
+				<input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Name"/>
 				<br/>
 				Company name :<br/>
-				<input type="text" class="form-control" id="tags" th:field="*{companyname}"  placeholder="Tags"/>
+				<input type="text" class="form-control" id="companyname" th:field="*{companyname}"  placeholder="Company name"/>
 				<br/>
 				Email address:<br/>
-				<input type="email" class="form-control" id="language" th:field="*{email}" placeholder="Language"/>
+				<input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Email address"/>
 				<br/>
 				Telephone number:<br/>
-				<input type="text" class="form-control" id="country" th:field="*{telephone}" placeholder="Country"/>
+				<input type="text" class="form-control" id="telephone" th:field="*{telephone}" placeholder="Telephone number"/>
 				<input type="hidden" id="id" th:field="*{id}">
 				<br/>
 				<button type="submit" class="btn btn-info">Submit</button>

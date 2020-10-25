@@ -3,7 +3,7 @@ package com.exam.demo.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "movies")
+@Table(name = "cards")
 public class Card {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -13,8 +13,19 @@ public class Card {
     private String companyname;
     private String telephone;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
     //getters and setters
 
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Long getId() {
         return id;
