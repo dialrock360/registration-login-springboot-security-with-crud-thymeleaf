@@ -1,78 +1,129 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	  lang="en">
 <head>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Bootstrap Example</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("#myInput").on("keyup", function() {
+				var value = $(this).val().toLowerCase();
+				$("#myTable tr").filter(function() {
+					$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+				});
+			});
+		});
+	</script>
+	<style>
+		/* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+		.row.content {height: 1500px}
 
-<link rel="stylesheet" type="text/css"
-	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+		/* Set gray background color and 100% height */
+		.sidenav {
+			background-color: #f1f1f1;
+			height: 100%;
+		}
 
-<title>Registration</title>
+		/* Set black background color, white text and some padding */
+		footer {
+			background-color: #555;
+			color: white;
+			padding: 15px;
+		}
+
+		/* On small screens, set height to 'auto' for sidenav and grid */
+		@media screen and (max-width: 767px) {
+			.sidenav {
+				height: auto;
+				padding: 15px;
+			}
+			.row.content {height: auto;}
+		}
+	</style>
 </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
 					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
 					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#" th:href="@{/}">Registration and
-					Login Module</a>
-			</div>
-			<div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
-				</ul>
-			</div>
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#" th:href="@{/}">Home</a>
 		</div>
-	</nav>
-
-	<br>
-	<br>
-	<div class="container">
-		<h2>Welcome <span sec:authentication="principal.username">User</span></h2>
-		<div style="text-align: right; margin-bottom: 5px;">
-			<a th:href="@{/card/add}" class="btn btn-success" role="button">+ Add card</a>
+		<div id="navbar" class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+			</ul>
 		</div>
-		<table class="table table-bordered">
-			<thead>
-			<tr>
-				<th>ID</th>
-				<th>Name</th>
-				<th>Company name</th>
-				<th>Email address</th>
-				<th>Telephone number</th>
-				<th></th>
-			</tr>
-
-
-			</thead>
-			<tbody>
-			<tr th:each="card : ${movies}">
-				<td th:text="${card.id}"></td>
-				<td th:text="${card.name}"></td>
-				<td th:text="${card.email}"></td>
-				<td th:text="${card.companyname}"></td>
-				<td th:text="${card.telephone}"></td>
-				<td>
-					<a th:href="@{/card/edit/{id}(id=${card.id})}" class="btn btn-success btn-sm" role="button">Update</a>
-					<a th:href="@{/card/delete/{id}(id=${card.id})}" class="btn btn-danger btn-sm" role="button">Delete</a>
-				</td>
-			</tr>
-			</tbody>
-		</table>
 	</div>
+</nav>
+<br>
+<br>
 
-	<script type="text/javascript"
-		th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
-	<script type="text/javascript"
-		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+<br>
+<div class="container-fluid">
+
+	<div class="row content">
+		<div class="col-sm-3 sidenav">
+			<h4>DIALROCK Blog</h4>
+			<br>
+
+			<div style="text-align: right; margin-bottom: 5px;">
+				<a th:href="@{/card/add}" class="btn btn-success" role="button">+ Add card</a>
+			</div>
+			<br>
+			<div class="input-group">
+				<input type="text"id="myInput"  class="form-control" placeholder="Search Blog..">
+				<span class="input-group-btn">
+          <button class="btn btn-default" type="button">
+            <span class="glyphicon glyphicon-search"></span>
+          </button>
+        </span>
+			</div>
+			<table class="table table-bordered">
+				<caption><h5>Card List</h5></caption>
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Company name</th>
+					<th>Telephone number</th>
+					<th></th>
+				</tr>
+
+
+				</thead>
+				<tbody id="myTable">
+				<tr th:each="card : ${movies}">
+					<td th:text="${card.name}"></td>
+					<td th:text="${card.companyname}"></td>
+					<td th:text="${card.telephone}"></td>
+					<td>
+						<a th:href="@{/card/edit/{id}(id=${card.id})}" class="btn btn-success btn-sm" role="button">Update</a>
+						<a th:href="@{/card/delete/{id}(id=${card.id})}" class="btn btn-danger btn-sm" role="button">Delete</a>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="col-sm-9">
+			<h4><small>RECENT POSTS</small></h4>
+		</div>
+	</div>
+</div>
+
+<footer class="container-fluid">
+	<p>Footer Text</p>
+</footer>
 
 </body>
 </html>
