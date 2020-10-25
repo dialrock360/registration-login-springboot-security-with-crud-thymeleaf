@@ -5,6 +5,8 @@ import com.exam.demo.model.User;
 import com.exam.demo.repository.*;
 import com.exam.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -35,6 +37,7 @@ public class MainController {
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
         System.out.println(this.curentuser().toString());
+        System.out.println(this.getCurrentUserId());
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println(users.toString());
 
@@ -139,4 +142,20 @@ public class MainController {
          }
          return   principal;
      }
+
+    private Long getCurrentUserId() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        String id = null;
+        if (authentication != null)
+            if (authentication.getPrincipal() instanceof UserDetails)
+                id = ((UserDetails) authentication.getPrincipal()).getUsername();
+            else if (authentication.getPrincipal() instanceof String)
+                id = (String) authentication.getPrincipal();
+        try {
+            return Long.valueOf(id != null ? id : "1"); //anonymoususer
+        } catch (NumberFormatException e) {
+            return 1L;
+        }
+    }
 }
